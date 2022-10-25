@@ -11,4 +11,4 @@ capabilities = "CAPABILITY_IAM"
 disable_rollback = false
 image_repositories = []
 Env = "dev"
-parameter_overrides = { VPCId = "vpc-01fd3de3d093b5e68", PrivateSubnetIds = "subnet-09b0f5d8e211fbc94","subnet-062c441d4c642daa4" }
+parameter_overrides = [ VPCId = "vpc-01fd3de3d093b5e68", PrivateSubnetIds = "subnet-09b0f5d8e211fbc94","subnet-062c441d4c642daa4" ]
