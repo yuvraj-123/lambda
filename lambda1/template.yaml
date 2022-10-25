@@ -43,7 +43,7 @@ Resources:
       MemorySize: 1024
       Handler: lambda_function.lambda_handler
       Runtime: python3.8
-      Role: !Sub 'arn:aws:iam::${AWS::AccountId}:role/admin'
+      Role: !Sub 'arn:aws:iam::${AWS::AccountId}:role/lambda'
       Architectures:
         - x86_64
       FunctionName: !Ref LambdaFunctionName
