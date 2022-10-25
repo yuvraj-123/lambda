@@ -32,7 +32,7 @@ Parameters:
   PrivateSubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
     Description: ID Of subnet for vpc endpoint
-    Default: subnet-09b0f5d8e211fbc94, 	subnet-062c441d4c642daa4
+    Default: subnet-09b0f5d8e211fbc94, subnet-062c441d4c642daa4
 
 
 Resources:
