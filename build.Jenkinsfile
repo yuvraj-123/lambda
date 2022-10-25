@@ -22,16 +22,17 @@ def deploylambda(dir) {
     if ("${BUILD_VERSION}" == "") {
         BUILD_VERSION = getDevVersion().trim()
     }
-    sh "cd ${dir}/ && sam deploy --no-fail-on-empty-changeset --template-file ${dir}/packaged-template.yml --config-file ${dir}/samconfig.${ENVIRONMENT}.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket}"
+    sh "cd ${dir}/ && sam deploy --no-fail-on-empty-changeset --template-file ${dir}/packaged-template.yml --config-file ${dir}/config.${ENVIRONMENT}.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket}"
     }
 
 
 pipeline {
     parameters {
-        text(name: 'services', defaultValue:'lambda1\nlambda2', description: 'services to build')
-        string(name: 'BUILD_VERSION', defaultValue:'v1.0', description: 'services to build')
+        text(name: 'services', defaultValue:'lambda1', description: 'services to build')
+        string(name: 'BUILD_VERSION', defaultValue:'', description: 'services to build')
         string(name: 's3_bucket', defaultValue: 'cloudfront0307', description: 's3 bukcet for lambda')
         string(name: 'branch_name', defaultValue: 'main', description: '')
+        string(name: 'ENVIRONMENT', defaultValue: 'dev', description: '')
     }
     environment {
         BRANCH_NAME = "${params.branch_name}".trim()
