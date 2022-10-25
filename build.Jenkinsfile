@@ -24,7 +24,7 @@ def deploylambda(dir) {
     }
     sh "cd ${dir}/ && sam deploy --no-fail-on-empty-changeset --template-file ${dir}/packaged-template.yml --config-file ${dir}/samconfig.${ENVIRONMENT}.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket}"
     }
-}
+
 
 pipeline {
     parameters {
