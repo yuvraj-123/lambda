@@ -27,12 +27,10 @@ Parameters:
   VPCId: 
     Type: AWS::EC2::VPC::Id
     Description: VPC ID
-    Default: vpc-01fd3de3d093b5e68
 
   PrivateSubnetIds:
     Type: List<AWS::EC2::Subnet::Id>
     Description: ID Of subnet for vpc endpoint
-    Default: subnet-09b0f5d8e211fbc94, subnet-062c441d4c642daa4
 
 
 Resources:

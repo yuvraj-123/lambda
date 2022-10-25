@@ -1,0 +1,15 @@
+version = 0.1
+[dev]
+[dev.deploy]
+[dev.deploy.parameters]
+LambdaFunctionName = "lambda1"
+stack_name = "lambda1"
+s3_bucket = "cloudfront0307"
+region = "us-east-1"
+confirm_changeset = true
+capabilities = "CAPABILITY_IAM"
+disable_rollback = false
+image_repositories = []
+Env = "dev"
+VPCId = "vpc-01fd3de3d093b5e68"
+PrivateSubnetIds = ["subnet-09b0f5d8e211fbc94", "subnet-062c441d4c642daa4"]

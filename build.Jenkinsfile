@@ -22,13 +22,13 @@ def deploylambda(dir) {
     if ("${BUILD_VERSION}" == "") {
         BUILD_VERSION = getDevVersion().trim()
     }
-    sh "cd ${dir}/ && sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file template.yaml --config-file config.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket} --parameter-overrides LambdaFunctionName=${dir} Env=${ENVIRONMENT}"
+    sh "cd ${dir}/ && sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file template.yaml --config-file ${ENVIRONMENT}-config.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket} --parameter-overrides LambdaFunctionName=-${ENVIRONMENT}-${dir} Env=${ENVIRONMENT}"
     }
 
 
 pipeline {
     parameters {
-        text(name: 'services', defaultValue:'lambda1', description: 'services to build')
+        text(name: 'services', defaultValue:'lambda1/n', description: 'services to build')
         string(name: 'BUILD_VERSION', defaultValue:'', description: 'services to build')
         string(name: 's3_bucket', defaultValue: 'cloudfront030702', description: 's3 bukcet for lambda')
         string(name: 'branch_name', defaultValue: 'main', description: '')
