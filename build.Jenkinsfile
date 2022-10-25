@@ -16,7 +16,6 @@ def buildlambda(dir) {
         BUILD_VERSION = getDevVersion().trim()
     }
     sh "cd ${dir}/ && sam build "
-    }
 }
 
 def deploylambda(dir) {
