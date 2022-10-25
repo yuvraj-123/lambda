@@ -22,7 +22,7 @@ def deploylambda(dir) {
     if ("${BUILD_VERSION}" == "") {
         BUILD_VERSION = getDevVersion().trim()
     }
-    sh "cd ${dir}/ && sam deploy --no-fail-on-empty-changeset --template-file ${dir}/packaged-template.yml --config-file ${dir}/config.${ENVIRONMENT}.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket}"
+    sh "cd ${dir}/ && sam deploy --no-fail-on-empty-changeset --template-file ${dir}/packaged-template.yml --config-file ${dir}/config.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket}"
     }
 
 
