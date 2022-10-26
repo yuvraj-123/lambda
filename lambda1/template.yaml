@@ -47,7 +47,7 @@ Resources:
           Type: Schedule
           Properties:
             Schedule: !Ref Cron
-            Name: UserEngagementCommunicationRule
+            Name: UserEngagementCommunicationRule1
             Description: User Engagement Communication Rule
             Enabled: true
 
