@@ -9,4 +9,4 @@ confirm_changeset = true
 capabilities = "CAPABILITY_IAM"
 disable_rollback = false
 image_repositories = []
-parameter_overrides = 'VPCId ="vpc-0b9df6d26c6488729" PrivateSubnetIds="subnet-0bf604215c5364d98","subnet-0a3714e17b138a517" LambdaFunctionName=prod-lambda1'
+parameter_overrides = 'VPCId=vpc-0b9df6d26c6488729 PrivateSubnetIds=subnet-0bf604215c5364d98,subnet-0a3714e17b138a517 LambdaFunctionName=prod-lambda1'

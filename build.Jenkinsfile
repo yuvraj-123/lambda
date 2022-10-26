@@ -28,7 +28,7 @@ def deploylambda(dir) {
 
 pipeline {
     parameters {
-        text(name: 'services', defaultValue:'lambda1/nlambda2', description: 'services to build')
+        text(name: 'services', defaultValue:'lambda1\nlambda2', description: 'services to build')
         string(name: 'BUILD_VERSION', defaultValue:'', description: 'services to build')
         string(name: 's3_bucket', defaultValue: 'cloudfront030702', description: 's3 bukcet for lambda')
         string(name: 'branch_name', defaultValue: 'main', description: '')
