@@ -1,0 +1,96 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  communicator
+
+  Sample SAM Template for communicator
+
+# More info about Globals: https://github.com/awslabs/serverless-application-model/blob/master/docs/globals.rst
+Globals:
+  Function:
+    Timeout: 900
+
+Parameters:
+  Env:
+    Type: String
+    Description: Environment
+    
+  LambdaFunctionName:
+    Type: String
+    Description: Enter the lambda function name.
+
+  Cron:
+    Type: String
+    Description: cron expression
+    Default: cron(0/2 * * * ? *)
+
+  VPCId: 
+    Type: AWS::EC2::VPC::Id
+    Description: VPC ID
+
+  PrivateSubnetIds:
+    Type: List<AWS::EC2::Subnet::Id>
+    Description: ID Of subnet for vpc endpoint
+
+
+Resources:
+  testlambda:
+    Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
+    Properties:
+      CodeUri: lambda2/
+      MemorySize: 1024
+      Handler: lambda_function.lambda_handler
+      Runtime: python3.8
+      Role: !Sub 'arn:aws:iam::${AWS::AccountId}:role/lambda'
+      Architectures:
+        - x86_64
+      FunctionName: !Ref LambdaFunctionName
+      Events:
+        CWSchedule:
+          Type: Schedule
+          Properties:
+            Schedule: !Ref Cron
+            Name: UserEngagementCommunicationRule
+            Description: User Engagement Communication Rule
+            Enabled: true
+
+      VpcConfig:
+        SecurityGroupIds: 
+          - !GetAtt LambdaSG.GroupId
+        SubnetIds: !Ref PrivateSubnetIds
+
+
+
+  LambdaSG:
+    Type: 'AWS::EC2::SecurityGroup'
+    Properties:
+      VpcId: !Ref VPCId
+      GroupDescription: SG for Lambda
+      Tags:
+        - Key: Name
+          Value: LambdaSG
+
+  CommunicatorLambdaSGIngressSelf:  
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      IpProtocol: -1
+      Description: Allow Security Group Ingress for self
+      GroupId: !GetAtt LambdaSG.GroupId
+      SourceSecurityGroupId: !GetAtt LambdaSG.GroupId
+
+  LambdaSGIngressAll:  
+    Type: 'AWS::EC2::SecurityGroupIngress'
+    Properties:
+      IpProtocol: -1
+      CidrIp: "172.31.0.0/16"
+      Description: Allow Security Group Ingress for VPC itself
+      GroupId: !GetAtt LambdaSG.GroupId
+
+  LambdaSGEgress:  
+    Type: 'AWS::EC2::SecurityGroupEgress'
+    Properties:
+      IpProtocol: -1
+      CidrIp: "0.0.0.0/0"
+      Description: Allow Security Group Egress
+      GroupId: !GetAtt LambdaSG.GroupId
+
