@@ -37,7 +37,7 @@ Resources:
     Properties:
       CodeUri: lambda2/
       MemorySize: 1024
-      Handler: lambda2.lambda_handler
+      Handler: lambda_function.lambda_handler
       Runtime: python3.8
       Role: !Sub 'arn:aws:iam::${AWS::AccountId}:role/lambda'
       Architectures:
