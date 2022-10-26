@@ -64,9 +64,9 @@ Resources:
       GroupDescription: SG for Lambda
       Tags:
         - Key: Name
-          Value: LambdaSG
+          Value: Lambda2SG
 
-  CommunicatorLambdaSGIngressSelf:  
+  Lambda2SGIngressSelf:  
     Type: 'AWS::EC2::SecurityGroupIngress'
     Properties:
       IpProtocol: -1
