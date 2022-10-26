@@ -43,14 +43,20 @@ Resources:
       Architectures:
         - x86_64
       FunctionName: !Ref LambdaFunctionName
-      # Events:
-      #   CWSchedule:
-      #     Type: Schedule
-      #     Properties:
-      #       Schedule: !Ref Cron
-      #       Name: UserEngagementCommunicationRule2
-      #       Description: User Engagement Communication Rule
-      #       Enabled: true
+      Events:
+        S3Event:
+          Type: S3
+          Properties:
+            Bucket:
+              Ref: S3BucketName     # This must be the name of an S3 bucket declared in the same template file
+            Events: 
+            - s3:ObjectCreated:*
+            Filter:
+              S3Key:
+                Rules:
+                - Name: prefix      # or "suffix"
+                  Value: inbound      # The value to search for in the S3 object key names
+
 
       VpcConfig:
         SecurityGroupIds: 
@@ -92,17 +98,4 @@ Resources:
       Description: Allow Security Group Egress
       GroupId: !GetAtt LambdaSG.GroupId
 
-  ExampleS3:
-    Type: AWS::S3::Bucket
-    DependsOn: testlambda2
-    Properties:
-      BucketName: !Ref S3BucketName
-      NotificationConfiguration:
-        LambdaConfigurations:
-          - Event: s3:ObjectCreated:Put
-            Filter:
-              S3Key:
-                Rules:
-                  - Name: prefix
-                    Value: inbound
-            Function: !GetAtt [ testlambda2, Arn]
+ 
