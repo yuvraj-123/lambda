@@ -11,9 +11,6 @@ Globals:
     Timeout: 900
 
 Parameters:
-  Env:
-    Type: String
-    Description: Environment
     
   LambdaFunctionName:
     Type: String
