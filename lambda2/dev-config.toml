@@ -2,8 +2,7 @@ version = 0.1
 [dev]
 [dev.deploy]
 [dev.deploy.parameters]
-LambdaFunctionName = "dev-lambda"
-stack_name = "lambda-dev"
+stack_name = "lambda2-dev"
 s3_bucket = "cloudfront0307"
 region = "us-east-1"
 confirm_changeset = true

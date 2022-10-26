@@ -3,7 +3,7 @@ version = 0.1
 [prod.deploy]
 [prod.deploy.parameters]
 LambdaFunctionName = "lambda1"
-stack_name = "lambda-prod"
+stack_name = "lambda2-prod"
 s3_bucket = "cloudfront0307"
 region = "us-east-2"
 confirm_changeset = true

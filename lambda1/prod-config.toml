@@ -2,7 +2,7 @@ version = 0.1
 [prod]
 [prod.deploy]
 [prod.deploy.parameters]
-stack_name = "lambda-prod"
+stack_name = "lambda1-prod"
 s3_bucket = "cloudfront0307"
 region = "us-east-2"
 confirm_changeset = true
