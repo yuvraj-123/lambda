@@ -22,7 +22,7 @@ def deploylambda(dir) {
     if ("${BUILD_VERSION}" == "") {
         BUILD_VERSION = getDevVersion().trim()
     }
-    sh "cd ${dir}/ && sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file template.yaml --config-file ${ENVIRONMENT}-config.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket} --parameter-overrides LambdaFunctionName=${ENVIRONMENT}-${dir} Env=${ENVIRONMENT}" 
+    sh "cd ${dir}/ && sam deploy --no-confirm-changeset --no-fail-on-empty-changeset --template-file template.yaml --config-file ${ENVIRONMENT}-config.toml --config-env ${ENVIRONMENT} --s3-bucket ${s3_bucket}" 
     }
 
 
