@@ -28,7 +28,9 @@ Parameters:
     Type: List<AWS::EC2::Subnet::Id>
     Description: ID Of subnet for vpc endpoint
 
-
+  S3BucketName:
+    Type: String
+    Description: S3 bucket name
 Resources:
   testlambda2:
     Type: AWS::Serverless::Function # More info about Function Resource: https://github.com/awslabs/serverless-application-model/blob/master/versions/2016-10-31.md#awsserverlessfunction
@@ -41,14 +43,14 @@ Resources:
       Architectures:
         - x86_64
       FunctionName: !Ref LambdaFunctionName
-      Events:
-        CWSchedule:
-          Type: Schedule
-          Properties:
-            Schedule: !Ref Cron
-            Name: UserEngagementCommunicationRule2
-            Description: User Engagement Communication Rule
-            Enabled: true
+      # Events:
+      #   CWSchedule:
+      #     Type: Schedule
+      #     Properties:
+      #       Schedule: !Ref Cron
+      #       Name: UserEngagementCommunicationRule2
+      #       Description: User Engagement Communication Rule
+      #       Enabled: true
 
       VpcConfig:
         SecurityGroupIds: 
@@ -90,3 +92,17 @@ Resources:
       Description: Allow Security Group Egress
       GroupId: !GetAtt LambdaSG.GroupId
 
+  ExampleS3:
+    Type: AWS::S3::Bucket
+    DependsOn: testlambda2
+    Properties:
+      BucketName: !Ref S3BucketName
+      NotificationConfiguration:
+        LambdaConfigurations:
+          - Event: s3:ObjectCreated:Put
+            Filter:
+              S3Key:
+                Rules:
+                  - Name: prefix
+                    Value: inbound
+            Function: !GetAtt [ testlambda2, Arn]
