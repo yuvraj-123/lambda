@@ -28,15 +28,15 @@ def deploylambda(dir) {
 
 pipeline {
     parameters {
-        text(name: 'lambdas', defaultValue:'lambda1\nlambda2', description: 'lambdas to build')
-        string(name: 'BUILD_VERSION', defaultValue:'', description: 'build version')
+        text(name: 'services', defaultValue:'lambda1\nlambda2', description: 'services to build')
+        string(name: 'BUILD_VERSION', defaultValue:'', description: 'services to build')
         string(name: 's3_bucket', defaultValue: 'cloudfront030702', description: 's3 bukcet for lambda')
         string(name: 'branch_name', defaultValue: 'main', description: '')
         string(name: 'ENVIRONMENT', defaultValue: 'dev', description: '')
     }
     environment {
         BRANCH_NAME = "${params.branch_name}".trim()
-        LAMBDAS = "${lambdas}"
+        SERVICES = "${services}"
     }
     agent any
     stages {
@@ -49,11 +49,11 @@ pipeline {
         stage('Build Lambda') {
             steps {
                 script {
-                    lambdas = "${params.lambdas}".split('\n')
+                    services = "${params.services}".split('\n')
                     def branches = [:]
-                    for (lambda in lambdas) {
-                        def lamb = lambda
-                        branches["Build ${lambda}"] = {buildlambda(lamb)}
+                    for (service in services) {
+                        def svc = service
+                        branches["Build ${service}"] = {buildlambda(svc)}
                     }
                     parallel branches
                 }
@@ -62,11 +62,11 @@ pipeline {
         stage('Deploy Lambda') {
             steps {
                 script {
-                    lambdas = "${params.lambdas}".split('\n')
+                    services = "${params.services}".split('\n')
                     def branches = [:]
-                    for (lambda in lambdas) {
-                        def lamb = lambda
-                        branches["Build ${lambda}"] = {deploylambda(lamb)}
+                    for (service in services) {
+                        def svc = service
+                        branches["Build ${service}"] = {deploylambda(svc)}
                     }
                     parallel branches
                 }
